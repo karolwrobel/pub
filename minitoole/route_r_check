@@ -1,0 +1,7 @@
+#!/bin/bash
+
+while true 
+do
+if [ `ping 8.8.8.8` ]; then echo "`date` OK" ; else ./route_r ; fi
+sleep 10
+done

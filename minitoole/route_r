@@ -1,0 +1,17 @@
+#!/bin/bash
+
+nmcli con up uuid f8476b17-5a53-44a2-83c7-2087c908f04a && ( PLAYGW=`ifconfig ppp0 | grep inet | cut -f3 -d: | cut -f 1 -d' '`
+
+route del default gw 192.168.1.1
+route add default gw $PLAYGW
+
+mv /etc/resolv.conf /etc/resolv.conf.old
+
+echo nameserver 89.108.195.21 > /etc/resolv.conf
+echo nameserver 217.17.34.10 >> /etc/resolv.conf
+
+(ping -c 1 wp.pl &)
+netstat -nr 
+echo
+)
+
