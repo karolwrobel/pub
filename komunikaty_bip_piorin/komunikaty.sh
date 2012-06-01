@@ -17,7 +17,13 @@ fi
 
 mv komunikat.new komunikat.old
 
-curl 'http://bip.piorin.gov.pl/index.php?pid=1745' | tr '\r' ' ' | grep -E -A5 '<P align=center>[0-9].</P></TD>' | tr '><' '\n\n' | grep -E '[0-9]{2}-|&nbsp' | sed -e s/'&nbsp;'/' '/g | awk '{data=$0; getline; print $0 " " data}' | sed s/\.[:space:]*$//g | tr '\277\363\263\346\352\266\261\274\361' zolcesazn | tee >(sed -e 's/^[0-9]*-[0-9]*-[0-9]* //' -e 's/Komunikat o wystepowaniu //'> komunikat.new)
+curl 'http://bip.piorin.gov.pl/index.php?pid=1745' \
+| tr '\r' ' ' | grep -E -A5 '<P align=center>[0-9].</P></TD>' \
+| tr '><' '\n\n' | grep -E '[0-9]{2}-|&nbsp' \
+| sed -e s/'&nbsp;'/' '/g | awk '{data=$0; getline; print $0 " " data}' \
+| sed s/\.[:space:]*$//g | tr '\277\363\263\346\352\266\261\274\361' zolcesazn \
+| tee >(sed -e 's/^[0-9]*-[0-9]*-[0-9]* //' \
+-e 's/Komunikat o wystepowaniu //'> komunikat.new)
 
 function smail() {
 komunikat_diff=`diff komunikat.old komunikat.new | grep \>`
