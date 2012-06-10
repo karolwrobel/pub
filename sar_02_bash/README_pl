@@ -1,0 +1,28 @@
+
+# Karol Wróbel @ 2012
+
+ o Opis:
+
+Zestaw skryptów do tworzenia grafów na podstawie danych zbieranych przez polecenie SAR z pakietu sysstat.
+
+ o Struktura katalogow
+   |sar_02_bash		
+   |-hosts		katalog zawierajacy katalogi danych innych hostow
+   |--c5		katalog hosta c5
+   |--xw6400		katalog hosta xw6400
+   |-lib		pliki skryptow podzielone na funkcjonalnosc
+   |-output		katalog plikow localhosta
+
+ o Przyklady uzycia:
+
+  - wspierane dzialanie przez polecenia make
+	all		tworzy wykresy dla lokalnego hosta i konfiguracji obecnych w hosts/*/; 
+			uruchamia przegladarke plikow graficznych
+	local		tworzy wykresy dla lokalnego systemu; uruchamia przegladarke plikow graficznych
+	nginx		tworzy wykresy dla lokalnego systemu; kopiuje wykresy do katalogu glownego serwera nginx; 
+			uruchamia przegladarke plikow graficznych
+	clean		kasuje pliki *.png, *.svg, *.data, *.d1 dla localhosta i pliki *.png dla hostow obcych
+	show		uruchamia przegladarke plikow graficznych
+	compress	kompresuje katalog output/ do pliku load_output.<data>.tgz
+
+

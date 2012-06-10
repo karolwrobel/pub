@@ -1,3 +1,7 @@
+
+# Karol Wróbel 2012
+# v 0.2
+
 all:
 	time (./run.sh)
 	time (./run.sh hosts)
