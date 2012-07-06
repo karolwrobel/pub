@@ -17,10 +17,10 @@ set ylabel "Obciążenie"
 set title "`hostname` Obciążenie CPU (`lscpu | grep ^CPU: | tr -s ' ' ' ' | cut -f2 -d' '` core) dane: ${1}"
 set key left box
 plot "${1}" using 1:2 index 0 title "%user" with lines lt rgb "#FF0000", \
-     "${1}" using 1:3 index 0 title "%nice" with lines, \
+     "${1}" using 1:(100-\$3) index 0 title "%nice" with lines, \
      "${1}" using 1:4 index 0 title "%system" with lines, \
-     "${1}" using 1:5 index 0 title "%iowait" with lines, \
-     "${1}" using 1:(\$2+\$3+\$4+\$5) index 0 title "SUMA" with points lt -1, \
-     "${1}" using 1:(100-\$7) index 0 title "100-%idle" with points lt 0
+     "${1}" using 1:(100-\$5) index 0 title "%iowait" with lines, \
+     "${1}" using 1:(\$2+\$3+\$4+\$5) index 0 title "SUMA" with lines lt 0, \
+     "${1}" using 1:(100-\$7) index 0 title "100-%idle" lt 0 
 EOF
 }

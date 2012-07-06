@@ -7,6 +7,10 @@ h=`date +%H`
 
 if [ $h -lt 6 ] && [ $d -gt 1 ]; then
 let d--
+if [ $d -lt 10 ]		# operacje arytmetyczne na stringu usuwaly wiodace zero
+then 				# nalezy je dodac.
+d=0$d
+fi
 fi
 
 sdate=${y}${m}${d}

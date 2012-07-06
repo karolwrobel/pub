@@ -8,14 +8,15 @@
 
 # SMS plusgsm; 
 
+SPATH="/tmp"
 NRTEL="+48695xxxxxx"
 EMAIL="xxx@gmail.com"
 
-if [ ! -f komunikat.new ]; then
-touch komunikat.new
+if [ ! -f ${SPATH}/komunikat.new ]; then
+touch ${SPATH}/komunikat.new
 fi 
 
-mv komunikat.new komunikat.old
+mv ${SPATH}/komunikat.new ${SPATH}/komunikat.old
 
 curl 'http://bip.piorin.gov.pl/index.php?pid=1745' \
 | tr '\r' ' ' | grep -E -A5 '<P align=center>[0-9].</P></TD>' \
@@ -23,10 +24,10 @@ curl 'http://bip.piorin.gov.pl/index.php?pid=1745' \
 | sed -e s/'&nbsp;'/' '/g | awk '{data=$0; getline; print $0 " " data}' \
 | sed s/\.[:space:]*$//g | tr '\277\363\263\346\352\266\261\274\361' zolcesazn \
 | tee >(sed -e 's/^[0-9]*-[0-9]*-[0-9]* //' \
--e 's/Komunikat o wystepowaniu //'> komunikat.new)
+-e 's/Komunikat o wystepowaniu //'> ${SPATH}/komunikat.new)
 
 function smail() {
-komunikat_diff=`diff komunikat.old komunikat.new | grep \>`
+komunikat_diff=`diff ${SPATH}/komunikat.old ${SPATH}/komunikat.new | grep \>`
 if [ `echo ${komunikat_diff} | wc -c ` -gt 2 ]
 then
 	echo Strwierdzono pojawienie sie nowych komunikatow.
@@ -39,8 +40,8 @@ fi
 }
 smail
 
-if [ `wc -l komunikat.new | cut -f1 -d' '` -eq 0 ]
+if [ `wc -l ${SPATH}/komunikat.new | cut -f1 -d' '` -eq 0 ]
 then
-	cp -f komunikat.old komunikat.new
+	cp -f ${SPATH}/komunikat.old ${SPATH}/komunikat.new
 fi
 
